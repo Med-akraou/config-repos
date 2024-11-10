@@ -1,0 +1,4 @@
+inv:
+  params:
+    x: x-prod
+    y: y-prod

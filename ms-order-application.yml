@@ -1,0 +1,4 @@
+inv:
+  params:
+    x: x-default
+    y: y-default
