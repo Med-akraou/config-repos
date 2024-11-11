@@ -3,5 +3,5 @@ global:
     name: ecom-app
   param:
     p1: 234
-    p2:235
+    p2: 235
 
