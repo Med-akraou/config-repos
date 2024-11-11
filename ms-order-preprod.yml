@@ -1,0 +1,4 @@
+inv:
+  params:
+    x: x-preprod
+    y: y-preprod
