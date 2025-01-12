@@ -1,5 +1,5 @@
 inv:
   u: uu
   params:
-    x: x-default
-    y: y-default
+    x: x-default v1
+    y: y-default v1
