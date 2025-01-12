@@ -3,3 +3,78 @@ inv:
   params:
     x: x-default v2
     y: y-default v2
+
+spring:
+  cloud:
+    discovery:
+      enabled: true
+    config:
+      enabled: true
+  config:
+    import: optional:configserver:http://localhost:9999
+  datasource:
+    url: jdbc:postgresql://localhost:5432/inventory_db
+    username: postgres
+    password: root
+    driverClassName: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+  kafka:
+    bootstrap-servers:  127.0.0.1:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.add.type.headers: false
+    consumer:
+      group-id: inventory-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            value:
+              default:
+                type: com.med.ms_inventory.dto.StockUpdatedEvent
+            trusted:
+              packages: com.med.*
+      auto-offset-reset: latest
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8888/realms/myrealm
+          jwk-set-uri: http://localhost:8888/realms/myrealm/protocol/openid-connect/certs
+
+api:
+  common:
+    version: dev
+    title: ms product
+    description: ms product documentation
+    termsOfService: MY TERMS OF SERVICE
+    license: license
+    licenseUrl: http://inwi.ma/LICENSE-0.0.1.html
+    externalDocDesc: MY WIKI PAGE
+    externalDocUrl: MY WIKI URL
+    contact:
+      name: NAME OF CONTACT
+      url: URL TO CONTACT
+      email: contact@mail.com
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+
